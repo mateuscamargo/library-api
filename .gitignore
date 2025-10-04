@@ -1,0 +1,8 @@
+node_modules/
+.env
+prisma/dev.db
+dev.db
+dist/
+.vscode/
+.DS_Store
+npm-debug.log

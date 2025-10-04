@@ -1,0 +1,41 @@
+// Prisma schema inferred from controllers
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id    String @id @default(uuid())
+  name  String
+  books Book[]
+}
+
+model Genre {
+  id    String @id @default(uuid())
+  genre String @unique
+  book  Book[]
+}
+
+model Book {
+  id          String  @id @default(uuid())
+  title       String
+  authorId    String
+  genreId     String
+  year        Int?
+  pages       Int?
+  rating      Float?
+  synopsis    String?
+  cover       String?
+  status      String?
+  currentPage Int?
+  isbn        String?
+  notes       String?
+
+  author Author @relation(fields: [authorId], references: [id])
+  genre  Genre  @relation(fields: [genreId], references: [id])
+}
