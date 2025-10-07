@@ -1,15 +1,15 @@
 import { Router } from "express";
 
+import { AchievementController } from "./controllers/AchievementController";
 import { CreateAuthorController } from "./controllers/CreateAuthorController";
 import { CreateBookController } from "./controllers/CreateBookController";
 import { CreateGenreController } from "./controllers/CreateGenreController";
+import { DashboardController } from "./controllers/DashboardController";
 import { FindAuthorController } from "./controllers/FindAuthorController";
 import { FindBookController } from "./controllers/FindBookController";
 import { FindGenreController } from "./controllers/FindGenreController";
-import { DashboardController } from "./controllers/DashboardController";
 import { ReadingGoalController } from "./controllers/ReadingGoalController";
 import { ReadingProgressController } from "./controllers/ReadingProgressController";
-import { AchievementController } from "./controllers/AchievementController";
 
 export const routes = Router();
 

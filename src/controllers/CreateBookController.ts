@@ -17,7 +17,9 @@ export class CreateBookController {
       currentPage,
       isbn,
       notes,
-      userId,
+      user: {
+        connect: { id: userId },
+      },
     } = request.body;
 
     try {

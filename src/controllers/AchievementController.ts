@@ -1,5 +1,5 @@
-import { prismaClient } from "../database/prismaClient";
 import { Request, Response } from "express";
+import { prismaClient } from "../database/prismaClient";
 
 export class AchievementController {
   async findAll(request: Request, response: Response) {
