@@ -9,16 +9,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Author {
   id    String @id @default(uuid())
   name  String
   books Book[]
+
+  @@map("authors")
 }
 
 model Genre {
   id    String @id @default(uuid())
   genre String @unique
   book  Book[]
+
+  @@map("genres")
 }
 
 model Book {
@@ -26,6 +31,7 @@ model Book {
   title       String
   authorId    String
   genreId     String
+  userId      String
   year        Int?
   pages       Int?
   rating      Float?
@@ -35,7 +41,57 @@ model Book {
   currentPage Int?
   isbn        String?
   notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   author Author @relation(fields: [authorId], references: [id])
   genre  Genre  @relation(fields: [genreId], references: [id])
+  progressLogs ReadingProgress[]
+
+  @@map("books")
 }
+
+model ReadingGoal {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  unit      String
+  current   Int
+  target    Int
+  period    String   
+  color     String?
+  bgColor   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reading_goals")
+
+}
+
+model ReadingProgress {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @default(now())
+  pages     Int
+  books     Int
+  bookId    String?
+  book      Book?    @relation(fields: [bookId], references: [id])
+
+  @@map("reading_progress")
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  difficulty  String?
+  unlocked    Boolean  @default(false)
+  unlockedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  @@unique([title, userId])
+  @@map("achievements")
+}
+
+
