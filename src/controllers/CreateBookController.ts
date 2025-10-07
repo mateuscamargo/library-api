@@ -9,12 +9,17 @@ export class CreateBookController {
     }
 
     try {
-      const payload = Array.isArray(request.body) ? request.body : [request.body];
+      const payload = Array.isArray(request.body)
+        ? request.body
+        : [request.body];
 
-      // Validate minimal fields if present
-      const valid = payload.every((p) => p && typeof p.title === "string" && p.title.trim() !== "");
+      const valid = payload.every(
+        (p) => p && typeof p.title === "string" && p.title.trim() !== ""
+      );
       if (!valid) {
-        return response.status(400).json({ error: "Cada livro precisa ter um título válido." });
+        return response
+          .status(400)
+          .json({ error: "Cada livro precisa ter um título válido." });
       }
 
       if (payload.length === 1) {
@@ -46,7 +51,6 @@ export class CreateBookController {
         return response.status(201).json(book);
       }
 
-      // Bulk create: map to createMany input. Note: createMany doesn't support relational connect syntax.
       const createManyData = payload.map((p) => ({
         title: p.title,
         authorId: p.authorId,
@@ -63,17 +67,22 @@ export class CreateBookController {
         notes: p.notes,
       }));
 
-      const result = await prismaClient.book.createMany({ data: createManyData });
+      const result = await prismaClient.book.createMany({
+        data: createManyData,
+      });
 
-      // Trigger achievements check for any provided userIds
-      const userIds = Array.from(new Set(createManyData.map((d) => d.userId).filter(Boolean)));
+      const userIds = Array.from(
+        new Set(createManyData.map((d) => d.userId).filter(Boolean))
+      );
       for (const uid of userIds) {
         await checkAchievements(uid as string);
       }
 
       return response.status(201).json({ count: result.count });
     } catch (error) {
-      return response.status(400).json({ error: "Erro ao criar livro", details: error });
+      return response
+        .status(400)
+        .json({ error: "Erro ao criar livro", details: error });
     }
   }
 }
