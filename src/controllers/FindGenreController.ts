@@ -3,12 +3,12 @@ import { prismaClient } from "../database/prismaClient";
 
 export class FindGenreController {
   async handle(request: Request, response: Response) {
-    const { id } = request.query;
+    const { id } = request.query as { id?: string };
 
     try {
       if (id) {
         const genre = await prismaClient.genre.findUnique({
-          where: { id: String(id) },
+          where: { id: Number(id) },
           include: { book: true },
         });
 
