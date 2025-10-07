@@ -2,12 +2,12 @@
   "name": "library-api",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "prisma:migration": "npx prisma migrate dev --name init",
-    "start": "npm run prisma:migration && node index.js"
+    "start": "npm run prisma:migration && node dist/server.js"
   },
   "dependencies": {
     "@prisma/client": "^5.5.0",
