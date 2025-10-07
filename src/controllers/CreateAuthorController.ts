@@ -8,21 +8,29 @@ export class CreateAuthorController {
     }
 
     try {
-      // Accept single object or array
-      const payload = Array.isArray(request.body) ? request.body : [request.body];
+      const payload = Array.isArray(request.body)
+        ? request.body
+        : [request.body];
 
-      const valid = payload.every((p) => p && typeof p.name === "string" && p.name.trim() !== "");
+      const valid = payload.every(
+        (p) => p && typeof p.name === "string" && p.name.trim() !== ""
+      );
       if (!valid) {
-        return response.status(400).json({ error: "Cada autor precisa ter um nome válido." });
+        return response
+          .status(400)
+          .json({ error: "Cada autor precisa ter um nome válido." });
       }
 
       if (payload.length === 1) {
-        const author = await prismaClient.author.create({ data: { name: payload[0].name } });
+        const author = await prismaClient.author.create({
+          data: { name: payload[0].name },
+        });
         return response.status(201).json(author);
       }
 
-      // Bulk create
-      const created = await prismaClient.author.createMany({ data: payload.map((p) => ({ name: p.name })) });
+      const created = await prismaClient.author.createMany({
+        data: payload.map((p) => ({ name: p.name })),
+      });
       return response.status(201).json({ count: created.count });
     } catch (error) {
       console.error("Erro ao criar autor:", error);

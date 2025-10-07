@@ -30,14 +30,17 @@ const achievement = new AchievementController();
 // Books
 routes.post("/books", createBook.handle);
 routes.get("/books", findBook.handle);
+routes.get("/books/:id?", (req, res) => findBook.handle(req, res));
 
 // Genres
 routes.post("/genres", createGenre.handle);
 routes.get("/genres", findGenre.handle);
+routes.get("/genres/:id?", (req, res) => findGenre.handle(req, res));
 
 // Authors
 routes.post("/authors", createAuthor.handle);
 routes.get("/authors", findAuthor.handle);
+routes.get("/authors/:id?", (req, res) => findAuthor.handle(req, res));
 
 // Dashboard
 routes.get("/dashboard", dashboard.handle);
