@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../database/prismaClient";
+import { checkAchievements } from "../services/checkAchievements";
 
 export class CreateBookController {
   async handle(request: Request, response: Response) {
@@ -16,14 +17,20 @@ export class CreateBookController {
       currentPage,
       isbn,
       notes,
+      userId,
     } = request.body;
 
     try {
+      if (!userId) {
+        return response.status(401).json({ error: "Usuário não autenticado" });
+      }
+
       const book = await prismaClient.book.create({
         data: {
           title,
           authorId,
           genreId,
+          userId,
           year,
           pages,
           rating,
@@ -35,6 +42,8 @@ export class CreateBookController {
           notes,
         },
       });
+
+      await checkAchievements(userId);
 
       return response.json(book);
     } catch (error) {
