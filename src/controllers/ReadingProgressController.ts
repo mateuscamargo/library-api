@@ -22,6 +22,10 @@ export class ReadingProgressController {
 
   async create(request: Request, response: Response) {
     try {
+      if (!request.body || Object.keys(request.body).length === 0) {
+        return response.status(400).json({ error: "Request body is required" });
+      }
+
       const { userId, pages, books, bookId } = request.body;
 
       const progress = await prismaClient.readingProgress.create({

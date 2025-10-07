@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE `authors` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -8,7 +8,7 @@ CREATE TABLE `authors` (
 
 -- CreateTable
 CREATE TABLE `genres` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `genre` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `genres_genre_key`(`genre`),
@@ -17,10 +17,10 @@ CREATE TABLE `genres` (
 
 -- CreateTable
 CREATE TABLE `books` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `authorId` VARCHAR(191) NOT NULL,
-    `genreId` VARCHAR(191) NOT NULL,
+    `authorId` INTEGER NOT NULL,
+    `genreId` INTEGER NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
     `year` INTEGER NULL,
     `pages` INTEGER NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `books` (
 
 -- CreateTable
 CREATE TABLE `reading_goals` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
     `title` VARCHAR(191) NOT NULL,
     `unit` VARCHAR(191) NOT NULL,
@@ -56,19 +56,19 @@ CREATE TABLE `reading_goals` (
 
 -- CreateTable
 CREATE TABLE `reading_progress` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `pages` INTEGER NOT NULL,
     `books` INTEGER NOT NULL,
-    `bookId` VARCHAR(191) NULL,
+    `bookId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `achievements` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
     `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,

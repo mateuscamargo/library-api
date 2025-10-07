@@ -11,7 +11,7 @@ datasource db {
 
 
 model Author {
-  id    String @id @default(uuid())
+  id    Int @id @default(autoincrement())
   name  String
   books Book[]
 
@@ -19,7 +19,7 @@ model Author {
 }
 
 model Genre {
-  id    String @id @default(uuid())
+  id    Int @id @default(autoincrement())
   genre String @unique
   book  Book[]
 
@@ -27,10 +27,10 @@ model Genre {
 }
 
 model Book {
-  id          String  @id @default(uuid())
+  id          Int  @id @default(autoincrement())
   title       String
-  authorId    String
-  genreId     String
+  authorId    Int
+  genreId     Int
   userId      String
   year        Int?
   pages       Int?
@@ -52,7 +52,7 @@ model Book {
 }
 
 model ReadingGoal {
-  id        String   @id @default(uuid())
+  id        Int   @id @default(autoincrement())
   userId    String
   title     String
   unit      String
@@ -69,19 +69,19 @@ model ReadingGoal {
 }
 
 model ReadingProgress {
-  id        String   @id @default(uuid())
+  id        Int   @id @default(autoincrement())
   userId    String
   date      DateTime @default(now())
   pages     Int
   books     Int
-  bookId    String?
+  bookId    Int?
   book      Book?    @relation(fields: [bookId], references: [id])
 
   @@map("reading_progress")
 }
 
 model Achievement {
-  id          String   @id @default(uuid())
+  id          Int   @id @default(autoincrement())
   userId      String
   title       String
   description String?

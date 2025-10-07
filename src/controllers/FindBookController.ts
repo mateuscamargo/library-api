@@ -7,8 +7,13 @@ export class FindBookController {
 
     try {
       if (id) {
+        const idNum = Number(id as string);
+        if (isNaN(idNum)) {
+          return response.status(400).json({ error: "ID inválido." });
+        }
+
         const book = await prismaClient.book.findUnique({
-          where: { id: String(id) },
+          where: { id: idNum },
           include: { author: true, genre: true },
         });
         return response.json(book);

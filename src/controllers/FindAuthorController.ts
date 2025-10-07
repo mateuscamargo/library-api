@@ -7,8 +7,13 @@ export class FindAuthorController {
 
     try {
       if (id) {
+        const idStr = id as string;
+        if (!idStr || typeof idStr !== "string") {
+          return response.status(400).json({ error: "ID inválido." });
+        }
+
         const author = await prismaClient.author.findUnique({
-          where: { id: String(id) },
+          where: { id: Number(idStr) },
           include: { books: true },
         });
 
